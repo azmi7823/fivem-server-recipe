@@ -1,9 +1,20 @@
 name: "IKN Ibukota Nusantara"
 author: "USERNAME"
 description: "FiveM QBCore Server dengan Ox Inventory dan Mechanic Job"
+version: 1.0
 
 tasks:
-  - action: "setupFiles"
+  - name: "Setup Database"
+    action: "setupDatabase"
+    data:
+      type: "mysql"
+      host: "localhost"
+      user: "root"
+      password: "password"
+      database: "fivem_database"
+
+  - name: "Setup Config Files"
+    action: "setupFiles"
     data:
       server.cfg: |
         endpoint_add_tcp "0.0.0.0:30120"
@@ -12,15 +23,8 @@ tasks:
         set mysql_connection_string "mysql://root:password@localhost/fivem_database"
         exec resources.cfg
 
-  - action: "setupDatabase"
-    data:
-      type: "mysql"
-      host: "localhost"
-      user: "root"
-      password: "password"
-      database: "fivem_database"
-
-  - action: "installResources"
+  - name: "Install QBCore & Ox Inventory"
+    action: "installResources"
     data:
       resources:
         - "qb-core"
@@ -30,7 +34,8 @@ tasks:
         - "qb-mechanic"
         - "mechanic_job"
 
-  - action: "configureFramework"
+  - name: "Configure Framework"
+    action: "configureFramework"
     data:
       framework: "qbcore"
       use_default_jobs: true
@@ -39,4 +44,5 @@ tasks:
       use_default_banking: true
       use_default_shops: true
       use_default_housing: true
+
 
